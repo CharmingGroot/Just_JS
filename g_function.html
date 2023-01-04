@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style type="text/css">
+    .note {
+        border: 1px solid;
+        min-height: 300px;
+    }
+</style>
+</head>
+<body>
+  <h1>function</h1>
+  <pre>
+    자바스크립트의 Function은 1급 객체이다.
+      1급객체라는 것은 값으로 다루어질 수 있는 객체(자바의 Object)를 의미한다.
+      값 : 변수에 할당될 수 있다. === 매개변수로 전달될 수 있다, 반환값으로 사용될 수 있다.
+
+  </pre>
+
+  <h2>함수 선언식</h2>
+  <pre>
+    function func (a, b) {}
+    함수 선언으로 만들어진 함수는 호이스팅이 발생한다.
+  </pre>
+  <div class="note" id="fnc1"></div>
+  <script>
+    hello();
+    function hello(){
+      fnc1.innerHTML += 'hello <br>';
+    }
+  </script>
+
+  <h2>함수 표현식</h2>
+  <pre>
+    let hello = function(){} >> 함수 표현식
+    함수를 선언하지 않고, 함수를 생성해 변수에 할당하는 방식
+    자바스크립트의 함수는 1급객체이기 때문에 가능한 방식이다.
+    함수표현식을 사용하면 호이스팅이 발생하지 않는다.
+  </pre>
+  <script>
+    let fncExpr = function(){fnc1.innerHTML += 'hello function';}
+    fncExpr();
+  </script>
+
+  <h2>화살표 함수 (람다표현식)</h2>
+  <pre>
+    작성구문
+    1. 화살표 함수 : () => {}
+    2. 만약 매개변수가 하나라면 괄호 생략 가능
+    3. 만약 함수에 return문만 존재한다면 return과 {}를 생략 가능
+  </pre>
+  <div class="note" id="lambda"></div>
+  <script>
+    let fruitsArr = ['사과', '딸기','바나나','수박','복숭아'];
+    // 람다를 사용해보자
+
+    // 1. 일반람다
+    // 배열안에 있는 모든요소를 인덱스와 함께 콘솔에 출력
+    
+    let lamdba1 = (e,i)=>{
+      lambda.innerHTML += `${i}.${e}`;
+    }
+    fruitsArr.forEach(lamdba1);
+
+    // 2. 매개변수가 하나만 있어서 ()를 생략한 람다.
+    // 배열안에 들ㅇ어가있는 모든 요소 콘솔에 출력
+    fruitsArr.forEach(e=>{lambda.innerHTML += `${e}<br>`;})
+
+    // 3. 매개변수가 하나만 있고 함수에 return문만 존재하는 람다
+    lambda.innerHTML += `${fruitsArr.map(e=> e+ '!')}`;
+
+
+
+
+
+
+
+
+
+
+  </script>
+
+  <h2>즉시실행함수표현식 (Immediately Invoked Function Expression)</h2>
+  <pre>
+    함수를 정의함과 동시에 실행하는 함수
+    즉시 실행함수는 다시 호출할 수 없다.
+    최초 한 번만 실행되어야하는 초기화 코드에 많이 사용
+  </pre>
+  <div id="iifeNote" class="note"></div>
+  <script>
+    // 가장 대표적인 iife 사용법
+    (function(){
+      let message = '함수가 즉시 실행됩니다.';
+      iifeNote.innerHTML += message;
+    })();
+  </script>
+
+
+
+
+
+  <h2>함수를 return 하기</h2>
+  <div id="returnNote" class="note">
+    <pre>
+      let plus = function(){
+        return function(a,b){
+          returnNote.innerHTML += a+b;
+        }
+      }
+      let res = plus();
+      console.dir(typeof(res));
+  
+      res(10,20);
+    </pre>
+  </div>
+  <script>
+    let plus = function(){
+      return function(a,b){
+        returnNote.innerHTML += a+b;
+      }
+    }
+    let res = plus();
+    console.dir(typeof(res));
+
+    res(10,20);
+
+  </script>
+
+
+<h2>lexical scope</h2>
+<pre>
+  Lexical Scope : 함수의 상위 스코프가, 함수가 선언(생성)되는 시점에 결정되는 것
+  함수 내부에서는 함수의 상위스코프에 있는 변수에는 접근할 수 있지만,
+  함수의 상위스코프에 존재하지 않는 변수에는 접근할 수 없다.
+
+  만약 상위스코프에 같은 이름의 변수가 여러개 존재한다면 가장 가까운 스코프의 변수를 사용함
+
+  자바스크립트의 함수는 생성될 때, 자신이 생성되는 시점의 환경(자신의 상위 스코프, 상위스코프에 선언된 변수들)를 기억한다.
+</pre>
+<div class="note" id="scopeNote"></div>
+<script>
+  let num = 1;
+  let num2 = 2;
+  let num3 = 100;
+
+  scopeNote.innerHTML += `전역 : ${num}, ${num2} <br>`;
+  // 전역이  outerScope함수의 상위스코프가 된다.
+  // 따러서 num, num2, num3에 접근할 수 있다.
+  function outerScope(){
+    let num = 9;
+    let num2 = 8;
+    
+    
+    scopeNote.innerHTML += `${num}, ${num2}, ${num3} <br>`; // 9, 8, 100 이 찍힘. num3은 가장 가까운 스코프의 변수를 사용
+
+
+    function innerScope(){
+      let str = 'hi';
+      let str2 = 'hello';
+    }
+    // g하위 스코프의 변수에는 접근할 수 없다.
+    // scopeNote.innerHTML += `${str}, ${str2}`;
+    console.dir(innerScope);
+    innerScope();
+  }
+  outerScope();
+
+
+
+</script>
+<h2> 클로저, Closure</h2>
+<pre>
+  실행이 종료된 함수의 지역변수를 참조하기 위해 사용하는 함수생성방식
+  자바의 private를 생각하면된다. getter이자 setter의 역할을 한다.
+
+  * 함수는 생성되는 시점에 자신의 스코프체인을 통해 상위스코프를 기억한다.
+
+  * 자바스크립트의 heap영역의 데이터들도 자바와 마찬가지로
+  더이상 객체를 참조하고있는 변수가 없을 때 가비지컬렉터에 의해서 삭제된다.
+
+  바깥 함수가 안쪽함수를 리턴하면, 바깥함수는 안쪽함수의 상위스코프이기 때문에 , 바깥쪽 함수의 지역변수, 매개변수를
+  안쪽함수가 자신의 스코프체인을 통해 기억하고 있다.
+
+  바깥함수의 실행이 종료되더라도 바깥함수의 지역변수에 직접 접근할 수 있는 방법은, 안쪽함수의 스코프 체인을 통해 바깥함수의 지역변수에 접근할 수 있다.
+
+</pre>
+<div class="note" id="closureNote"></div>
+<script>
+  function outer(){
+    let name='chg';
+    let age=20;
+    
+    let setAge = (v) => {
+      if(v < 0) {
+        throw new Error('나이가 어떻게 0보다 작니');
+      }
+      age = v
+      return age;
+    };
+    
+    console.dir(name);
+    console.dir(age);
+
+    return setAge;
+
+  }
+  let closure = outer();
+  
+  // 이미 종료된 outer의 지역변수에 클로저를 통해 접근하여 값을 수정
+  console.dir(closure(100));
+
+  // closure에 작성한 예외처리 때문에 예외발생
+  // console.dir(closure(-1));
+</script>
+
+<h2>함수의 매개변수</h2>
+<pre>
+  자바스크립트의 함수에 선언된 매개변수들에, 함수를 실행할 때 값을 전달하지 않아도 예외가 발생하지 않는다.
+
+  JS함수의 전달인자들은 arguments 객체에 저장되는 방식이기 때문이다.
+
+
+</pre>
+<div class="note" id="arG"></div>
+<script>
+  function arG(a,b,c,d,e,f,g,h,i,j) {
+    console.dir('매개변수가 많다');
+  }
+  
+  // arG();
+  
+  function noneArgs() {
+    arG.innerHTML += `${arguments}`;
+    console.dir(arguments);
+    console.dir('매개변수 없');
+  }
+
+  // noneArgs(1,2,3,4,5,6,7,9);
+
+
+
+  function hi(){
+    arG.innerHTML += `hi`;
+    console.dir(`hi 가 실행`);
+  };
+
+  // 매개변수로 받은 함수를 실행하고, dir로 출력
+  function $(func,selectorId,str){
+    let sI = document.querySelector(`#${selectorId}`);
+    sI.innerHTML += `func 실행 : ${str}`;
+    func();
+    // console.dir(sI);
+    console.dir(`${str}`);
+  }
+
+  $(hi,`arG`,`하 드디어 성공`);
+
+
+
+</script>
+
+</body>
+</html>
