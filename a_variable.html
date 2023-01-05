@@ -50,7 +50,7 @@
             hello = "hello world"
             console.dir(hello)
 
-            letHello = "hello let"
+            // letHello = "hello let"
 
             // hello 선언
             var hello
@@ -61,6 +61,7 @@
 
             function alertHello() {
                 console.dir("function hello")
+                var aFun = '함수에서 선언한 var'
             }
         </script>
         <h2>var, let, const의 변수 스코프</h2>
@@ -93,9 +94,26 @@
           let, const로 선언한 변수는 전역객체에 등록되지 않는다.
         </pre>
         <script>
-            var mc = "전역에서 선언한 var변수"
+            var aWin = "전역에서 선언한 var변수"
             // var는 스크립트 태그 바로 안에서 쓰면 전역으로 선언됨
             console.dir(window)
+        
+
+            console.log(`a : ${a}`);
+            var a = 1;
+             function variableEx(){
+	        console.log(`함수 내 var 선언 이전 a : ${a}`); // undefined
+ 	        var a = 2;
+  	        console.log(`var = 2 선언이후 a : ${a}`); // a : 2
+  
+            
+            }
+            console.log(variableEx());
+            console.log(`전역에서 선언된 a : ${a}`); // a : 1 // 어때유 가독성 개똥이죠?
+
+
         </script>
+
+        
     </body>
 </html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style type="text/css">
+    .note {
+        border: 1px solid;
+        min-height: 300px;
+    }
+</style>
+<script>
+  let $ = function(cssSelector, message){
+    let htmlElements = document.querySelectorAll(cssSelector);
+    if(message){
+      htmlElements.forEach(e => {e.innerHTML += message + '<br>'});
+    } 
+    if(htmlElements.length == 1){
+      return htmlElements[0];
+    }
+
+    return htmlElements;
+  }
+</script>
+</head>
+<body>
+  <h1>프로토타입의 객체</h1>
+  <pre>
+    함수가 생성되는 시점에 함께 생성되는 객체를 프로토타입 객체라고 한다.
+    함수객체의 prototype속성에 함께 생성된 프로토타입 객체를 참조하고 있다.
+    프로토타입 객체는, constructor 속성을 가지고 있는 객체로, constructor속성에는 자신과 함께 생성된 함수를 참조하고 있다.
+
+    생성자 함수로 생성된 모든 객체는 자신의 prototype속성으로 생성자 함수의 prototype객체를 가지게 된다.
+    생성자 함수로 생성된 모든 객체는 프로토타입 객체가 가지고있는 속성을 자신의 것처럼 사용할 수 있다.
+    
+    또한 프로토타입 객체도 자바스크립트의 객체이기 때문에, 속성을 동적으로 추가할 수 있다.
+  </pre>
+  <div class="note" id="#prototypeNote"></div>
+  <script>
+    function Student(arcademy, name, kor, eng, math){
+      this.arcademy = arcademy;
+      this.name = name;
+      this.kor = kor;
+      this.eng = eng;
+      this.math = math;
+
+      this.getTotalScore = function(){
+        return this.kor + this.eng + this.math;
+      }
+
+      // object 객체의 toString 메서드를 오버라이드
+      this.toString = ()=>{
+        return `arcademy : ${this.arcademy}, name : ${this.name}, 총점 : ${this.getTotalScore()}`;
+      }
+
+      // 생성자함수는 this를 반환하기 때문에 아래의 코드는 무시. 아래형태로 쓰면 안된다.
+      let age = 100;
+      return age;
+    }
+    console.dir(Student);
+
+    // 아래의 세 인스턴스는 프로토타입 속성으로 Student의 프로토 타입 객체를 참조하고 있다.
+    let hg = new Student('mc','호근',100,100,100);
+    let hhj = new Student('mc','현중',100,100,100);
+    let sb= new Student('mc','신비',100,100,100);
+
+    console.dir(hg);
+    console.dir(hhj);
+    console.dir(sb);
+
+    $('#prototypeNote', hg);
+    $('#prototypeNote', hhj);
+    $('#prototypeNote', sb);
+
+    $('#prototypeNote', '----------------- 모든 인스턴스에 nation 속성을 추가----------');
+
+
+    hg.__proto__.nation = 'kor';
+
+    let students = [hg, hhj, sb];
+    students.forEach(e => {
+      for(key in e){
+        $('#prototypeNote', `${e.name}[${key}] : ${e[key]} `);
+      }
+
+      $('#prototypeNote',`=====================================`)
+    })
+
+    hg.gender = 'male';
+    hhj.gender = 'male';
+    sb.gender = 'female';
+
+    console.dir(hg);
+    console.dir(hhj);
+    console.dir(sb);
+
+    $('#prototypeNote', hg);
+    $('#prototypeNote', hhj);
+    $('#prototypeNote', sb);
+
+
+
+
+
+
+
+
+    </script>
+</body>
+</html>

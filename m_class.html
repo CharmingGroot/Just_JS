@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style type="text/css">
+    .note {
+        border: 1px solid;
+        min-height: 300px;
+    }
+  </style>
+  <script>
+  let $ = function(cssSelector, message){
+    let htmlElements = document.querySelectorAll(cssSelector);
+    if(message){
+      htmlElements.forEach(e => {e.innerHTML += message + '<br>'});
+    } 
+    if(htmlElements.length == 1){
+      return htmlElements[0];
+    }
+  
+    return htmlElements;
+  }
+  </script>
+</head>
+<body>
+  <h1>Class</h1>
+  <div class="note" id="classNote"></div>
+  <script>
+
+    class Person{
+      // public field
+      name;
+
+      //private field, #
+      #gender;
+
+      // static변수
+      // 자바스크립트의 static은 자바와 달리 오직 type으로만 static 속성을 다룰 수 있다.
+      // Person.species (o), hmd.species (X)
+      static species = 'mammalia';
+
+      // 상수
+      // 속성명을 대문자로 작성하면, 상수로 간주하기로 약속함. 실제로 상수가 되는 것은 아님.
+
+      #HABBIT = 'earth';
+
+      // 생성자
+
+      constructor(name, gender){
+        this.name = name;
+        this.gender = gender;
+      }
+
+      //setter
+      set gender(v){
+        console.dir('setGender 호출됨')
+        this.#gender = v;
+      }
+
+      // getter
+      get gender(){
+        console.dir('getGender 호출됨')
+        return this.#gender;
+      }
+
+      get HABBIT(){
+        console.dir('getHABBIT 호출됨')
+        return this.#HABBIT;
+      }
+
+
+
+
+
+
+
+
+    }
+    let chg = new Person('최호근','남자');
+    // chg.gender = 'male'; // 요런식으로 바꿀 수도 있다.
+    
+    $('#classNote', chg.name);
+    $('#classNote', chg.gender);
+    $('#classNote', Person.species);
+    $('#classNote', chg.HABBIT);
+
+    // 상속
+    class Student extends Person{
+      #arcademy;
+      constructor(name, gender, arcademy){
+        // 부모의 생성자를 먼저 호출해야한다.
+        super(name, gender); // super로 부모 생성자호출
+        this.#arcademy = arcademy;
+      }
+
+      set arcademy(v){
+        this.#arcademy = v;
+      }
+
+      get arcademy(){
+        return this.#arcademy;
+      }
+
+
+    }
+
+    let echo = new Student('홍길동','남','MC');
+    $('#classNote', echo.name);
+    $('#classNote', echo.gender);
+    $('#classNote', Person.species);
+    $('#classNote', echo.HABBIT);
+    $('#classNote', echo.arcademy);
+    console.dir(echo);
+
+    // console.dir(echo.#HABBIT) // 에러발생!
+    // #은 private이기 때문에 클래스 밖에서는 접근 자체가 안된다.
+
+  </script>
+</body>
+</html>

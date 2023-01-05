@@ -37,7 +37,7 @@
     let fruitsArr = ['사과', '딸기','바나나','수박','복숭아'];
     // 1. '딸기' 요소의 인덱스를 찾아 console.dir로 출력하시오.
 
-    let findStraw = fruitsArr.findIndex(function(fruit){return fruit === "딸기"});
+    let findStraw = fruitsArr.findIndex((fruit)=>{return fruit === "딸기"});
     console.dir(findStraw);
     console.dir(fruitsArr.indexOf("딸기"));
     // 2. fruitsArr의 맨 뒤에 자몽을 추가하세요.

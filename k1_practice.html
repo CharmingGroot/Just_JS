@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<style type="text/css">
+  .note {
+      border: 1px solid;
+      min-height: 300px;
+  }
+</style>
+<script>
+let $ = function(cssSelector, message){
+  let htmlElements = document.querySelectorAll(cssSelector);
+  if(message){
+    htmlElements.forEach(e => {e.innerHTML += message + '<br>'});
+  } 
+  if(htmlElements.length == 1){
+    return htmlElements[0];
+  }
+
+  return htmlElements;
+}
+</script>
+<body>
+  <h1>Practice</h1>
+  <div id="pracNote" class="note"></div>
+  <script>
+      function Student(arcademy, name, kor, eng, math){
+        this.arcademy = arcademy;
+        this.name = name;
+        this.kor = kor;
+        this.eng = eng;
+        this.math = math;
+       this.getTotalScore = function(){
+          return this.kor + this.eng + this.math;
+        }
+
+      
+        this.toString = function(){
+        let arr = [];
+        for(key in this){
+          if(typeof(this[key]) != `function`){
+            arr.push(`${key} : ${this[key]}`);
+          }
+        }
+
+        arr.sort();
+        return arr.join(`/`);
+       }
+
+      
+        let age = 100;
+        return age;
+    }
+
+    let chg = new Student('mc','최호근',100,100,100); // 생성
+
+    let highSchoolStudent = {
+      level : '고등학교',
+      age : 17
+    }
+
+    let middleSchoolStudent = {
+      level : '중학교',
+      age : 15
+    }
+
+    chg.__proto__ = highSchoolStudent;
+    $(`#pracNote`, chg);
+
+    chg.__proto__ = middleSchoolStudent;
+    $(`#pracNote`, chg);
+
+    let character = {
+      game : '메이플스토리',
+      characterName : '닉네임할거없다',
+      level : 230
+    }
+
+    character.__proto__ = chg;
+    $(`#pracNote`, `${character}`);
+    console.dir(window);
+  </script>
+</body>
+</html>

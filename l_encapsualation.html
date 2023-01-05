@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style type="text/css">
+    .note {
+        border: 1px solid;
+        min-height: 300px;
+    }
+  </style>
+  <script>
+  let $ = function(cssSelector, message){
+    let htmlElements = document.querySelectorAll(cssSelector);
+    if(message){
+      htmlElements.forEach(e => {e.innerHTML += message + '<br>'});
+    } 
+    if(htmlElements.length == 1){
+      return htmlElements[0];
+    }
+  
+    return htmlElements;
+  }
+  </script>
+</head>
+<body>
+  <h1>encapsulation</h1>
+  <div id="encapsulationNote" class="note"></div>
+  <script>
+    function Person(name, gender) {
+      let _name = name; // _는 해당 속성이 private임을 말하는 개발자들의 약속(네임컨벤션)
+      let _gender = gender; 
+      
+      
+      // setter/ getter를 통해 _name과 _gender에 접근할수 있도록 작성
+      // 클로저가 있기 때문에 가능하다.
+
+      // 이 function은 객체가 사라질 때 까지 살아있는다. Person의 속성으로 기억되는 것이 아니라, 스코프체인으로 기억된다.
+      this.setName = function(name) {
+        _name = name;
+      }
+
+      this.getName = function () {
+        return _name;
+      }
+
+      this.setGender = function(gender) {
+        _gender = gender;
+      }
+
+      this.getGender = function () {
+        return _gender;
+      }
+      this.toString = function(){
+          return `_name : ${_name} , _gender : ${_gender}`;
+  
+          arr.sort();
+          
+  
+         }
+  
+         Object.freeze(this); // 객체에 속성 추가/ 삭제 / 수정 금지
+    }
+
+
+       let hmd = new Person();
+       console.dir(hmd); // 아무것도 안나옴
+       hmd.setName('이름');
+       hmd.setGender('성별');
+       console.dir(hmd); // 콘솔에서 getName() getGender() 실행 시 값이 출력됨.
+
+      $(`#encapsulationNote`,hmd);
+      $(`#encapsulationNote`,`hmd.name : ${hmd.name}`);
+      $(`#encapsulationNote`,`hmd.gender : ${hmd.gender}`);
+      $(`#encapsulationNote`,`hmd.getname() : ${hmd.getName()}`);
+      $(`#encapsulationNote`,`hmd.getGender() : ${hmd.getGender()}`);
+
+
+
+
+
+
+  </script>
+  
+</body>
+</html>

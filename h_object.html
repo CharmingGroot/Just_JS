@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style type="text/css">
+    .note {
+        border: 1px solid;
+        min-height: 300px;
+    }
+</style>
+<script>
+  let $ = function(cssSelector, message){
+    let htmlElements = document.querySelectorAll(cssSelector);
+    if(message){
+      htmlElements.forEach(e => {e.innerHTML += message + '<br>'});
+    } 
+    if(htmlElements.length == 1){
+      return htmlElements[0];
+    }
+
+    return htmlElements;
+  }
+</script>
+</head>
+<body>
+  <h1>객체</h1>
+  <h2>객체 생성 및 호출</h2>
+  <pre>
+    자바스크립트의 객체는, {} 를 사용해 literal 방식으로 생성하거나,
+    Object 생성자 함수를 사용해 객체를 수 있다.
+    객체의 속성에는 모든 타입이 올 수 있다.
+  </pre>
+
+  <div class="note" id="objectNote"></div>
+  <script>
+    // 객체를 literal로 생성
+    let sweet = {
+      title : '달콤한 나의 도시',
+      category : ['문학','소설','한국문학'],
+
+      // - 는 산술연산자라서 속성명으로 사용할 수 없지만, 문자열로 지정하면 해결된다.
+      'cate-cnt':3,
+    }
+
+
+    // arr : 배열처럼 사용할 수 있도록 만든 객체를 유사배열 객체라고한다.
+    let arr = {
+      0:'a',
+      1:'b',
+      2:'c'
+    }
+
+
+    // object 생성자 함수를 사용해 객체 생성
+    let summer = new Object();
+    console.dir(summer);
+
+    // 자바스크립트의 객체는 속성을 원할 때 추가할 수 있다.
+    summer.title ="여름";
+
+    $('#objectNote', `sweet.title : ${sweet.title}`);
+    
+  </script>
+
+  <h2>객체의 메서드</h2>
+  <pre>
+    객체에 속한 함수를 메서드라 부른다.
+  </pre>
+  <div id="methodNote" class="note"></div>
+  <script>
+    let simba = {
+      name : '심바',
+      sing : function(title){
+        $('#methodNote',`${title}을 심바가 부르고 있습니다.`);
+      }
+
+    }
+    simba.sing('gee');
+  </script>
+
+  <h2>객체와 반복문</h2>
+  <pre>
+    for-in 문을 사용하면, 객체의 속성명을 String 타입의 값으로 받아올 수 있다.
+  </pre>
+  <div class="note" id="forInNote"></div>
+  <script>
+    let godOfWar = {
+      title:'god of war',
+      price: 69800,
+      company: '산타모니카'
+    }
+
+    for(key in godOfWar){ // key는 키값을 의미
+      $('#forInNote',`속성명 : ${key}`); // String 타입으로 출력하기위한 구문 작성
+      $('#forInNote',`속성값 : ${godOfWar[key]}`); // String 타입으로 출력하기위한 구문 작성
+    }
+  </script>
+
+  <h2>Object 속성 조작</h2>
+  <div class="note" id="propsNote"></div>
+  <script>
+    // villian 속성 추가
+    godOfWar.villian = '제우스'; // 간단히 추가 가능하다.
+    $('#propsNote','[[[[[[[[[[[[[[[[[villian 속성 추가]]]]]]]]]]]]]]]]]]');
+
+    for(key in godOfWar){
+      $('#propsNote',`${key} : ${godOfWar[key]}`);
+    }
+    $('#propsNote', `===================================`);
+    // 속성삭제
+    delete godOfWar.villian; // 객체의 속성을 제거하는  delete연산자를 사용한다.
+    $('#propsNote','[[[[[[[[[[[[[[[[[villian 속성 삭제]]]]]]]]]]]]]]]]]]');
+    for(key in godOfWar){
+      $('#propsNote',`${key} : ${godOfWar[key]}`);
+    }
+    $('#propsNote', `===================================`);
+
+    // 속성 추가 금지
+    // Object.preventExtensions(obj)
+    Object.preventExtensions(godOfWar); // 속성추가가 금지되는 객체가 된다.
+
+    godOfWar.villian = '제우스';
+    $('#propsNote','[[[[[[[[[[[[[[[[[Object.preventExtensions(godOfWar)후 villian 속성 추가]]]]]]]]]]]]]]]]]]');
+    $(`#propsNote`, `Object.preventExtensions : ${Object.isExtensible(godOfWar)} 확장이 불가능함.`);
+    for(key in godOfWar){
+      $('#propsNote',`${key} : ${godOfWar[key]}`);
+    }
+    $('#propsNote', `===================================`);
+
+    delete godOfWar.company;
+    $('#propsNote','[[[[[[[[[[[[[[[[[villian 속성 삭제]]]]]]]]]]]]]]]]]]');
+    for(key in godOfWar){
+      $('#propsNote',`${key} : ${godOfWar[key]}`);
+    }
+    $('#propsNote', `===================================`);
+
+    // 속성 추가와 삭제를 동시에 금지
+    Object.seal(godOfWar);
+    delete godOfWar.price;
+    godOfWar.villian = '제우스';
+    $('#propsNote','[[[[[[[[[[[[[[[[[Object.seal로 추가와 삭제를 동시에 금지]]]]]]]]]]]]]]]]]]');
+    for(key in godOfWar){
+      $('#propsNote',`${key} : ${godOfWar[key]}`);
+    }
+    $('#propsNote', `===================================`);
+
+    // 속성 추가, 삭제 및 속성값 변경 금지
+    Object.freeze(godOfWar); // 멈춰!
+    delete godOfWar.price;
+    for(key in godOfWar){
+      $('#propsNote',`${key} : ${godOfWar[key]}`);
+    }
+    $('#propsNote', `===================================`);
+    godOfWar.villian = '제우스';
+    for(key in godOfWar){
+      $('#propsNote',`${key} : ${godOfWar[key]}`);
+    }
+    $('#propsNote', `===================================`);
+    godOfWar.title = 'GTA3'
+    $('#propsNote','[[[[[[[[[[[[[[[[[Object.seal로 추가와 삭제와 속성값 변경을 동시에 금지]]]]]]]]]]]]]]]]]]');
+    for(key in godOfWar){
+      $('#propsNote',`${key} : ${godOfWar[key]}`);
+    }
+    $('#propsNote', `===================================`);
+  </script>
+</body>
+</html>
