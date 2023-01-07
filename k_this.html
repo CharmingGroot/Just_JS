@@ -42,6 +42,7 @@
 
     function info(){
       var who = 'info함수의 who입니다';
+      $('#thisNote', `=================`);
       $('#thisNote', `who : ${who}`);
       $('#thisNote', `this.who : ${this.who}`);
       console.dir(this);
@@ -60,7 +61,8 @@
     var methodWho = '전역객체의 who';
     let multicampus = {
       methodWho : '멀티캠퍼스의 who',
-      info : () => {
+      info : function(){ // 화살표함수를 사용하면 this가 화살표함수의 상위스코프 가리킨다. 여기서 사용하면 전역객체가 되겠지. 반면 지금과 같이 메서드를 사용하면 메서드를 호출한 객체가 바인딩된다. 
+        $('#thisNote', `=================`);
         $(`#thisNote`, this.methodWho);
         console.dir(this)
       }
@@ -88,15 +90,22 @@
   </pre>
   <div class="note" id="#thisNote"></div>
   <script>
+    var who = '생성자 함수 외부, 전역 who';
     function Info() {
+      var who = '생성자 함수 내부, who'
       this.info = function(){
+        $('#thisNote', `=================`);
         $('#thisNote',this.who);
+        $('#thisNote', `=================`);
+
       }
     }
 
     let multicampusInfo = new Info();
+    console.dir(multicampusInfo.who); // undefined : 객체가 빈 상태이다.
     multicampusInfo.who = '멀티캠퍼스 학생';
-    multicampusInfo.info();
+    console.dir(multicampusInfo.who); // 멀티캠퍼스 학생
+    console.dir(multicampusInfo.info());
   </script>
 
   <h2>4. 화살표 함수에서의 this</h2>
@@ -168,9 +177,13 @@
     // Function 객체의 apply, call 메서드를 사용해 this를 명시적으로 바인딩할 수 있다.
 
     // apply는 this가 받을 
-    mc.info.apply(kitri); // this에 kitri를 바인딩
-    kitri.info.apply(mc); // this에 mc를 바인딩
+    mc.info.apply(kitri); // mc.info 메서드에 접근하여 this에 kitri를 바인딩
+    mc.info();
+    kitri.info.apply(mc); // 마찬가지로 kitri.info에 접근하여 this에 mc를 바인딩
+    kitri.info(); // 결과를 보면 두 객체의 this가 바뀐 값으로 출력되는 것을 볼 수 있다.
 
+    
+    // 
     changeInfo.apply(mc,['최호근[멀캠]',100]);
     mc.info();
 

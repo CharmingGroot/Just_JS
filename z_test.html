@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style type="text/css">
+    .note {
+        border: 1px solid;
+        min-height: 300px;
+    }
+</style>
+<script>
+  let $ = function(cssSelector, message){
+    let htmlElements = document.querySelectorAll(cssSelector);
+    if(message){
+      htmlElements.forEach(e => {e.innerHTML += message + '<br>'});
+    } 
+    if(htmlElements.length == 1){
+      return htmlElements[0];
+    }
+
+    return htmlElements;
+  }
+</script>
+</head>
+<body>
+  <script>
+    function Student1(name, age){
+      this.name = name;
+      this.age = age;
+
+      this.toString = ()=>{
+        return `this.name : ${this.name}, this.age : ${this.age}`;
+      }
+    }
+
+    function Student2(name, age){
+      this.name = name;
+      this.age = age;
+
+      this.toString = ()=>{
+        return `this.name : ${this.name}, this.age : ${this.age}`;
+      }
+    }
+
+    Student3 = new Student2;
+    
+
+    console.dir(Student1);
+    console.dir(Student2);
+
+</script>
+</body>
+</html>

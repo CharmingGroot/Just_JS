@@ -56,8 +56,8 @@
       }
 
       // 생성자함수는 this를 반환하기 때문에 아래의 코드는 무시. 아래형태로 쓰면 안된다.
-      let age = 100;
-      return age;
+      // let age = 100;
+      // return age;
     }
     console.dir(Student);
 
@@ -78,6 +78,11 @@
 
 
     hg.__proto__.nation = 'kor';
+    console.dir(hg.nation);
+    console.dir(Student);
+
+    console.dir(Student.prototype.nation);
+
 
     let students = [hg, hhj, sb];
     students.forEach(e => {
