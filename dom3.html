@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    button{
+  line-height:2;
+    }
+
+    .wrap_color{
+        display: flex;
+        flex-wrap:wrap;
+        justify-content: space-between;
+        width:320px;
+        height:320px;
+    }
+    
+    .wrap_color>div{
+        width:150px;
+        height:150px;
+        margin-top:20px;
+        border:thin solid;
+    }
+    
+    .base{
+        display: flex;
+        flex-direction: column;
+        margin:4% 0 2% 0;
+    }
+
+    #red{
+      background-color: lightyellow;
+    }
+
+    #pink{
+      background-color: lightyellow;
+    }
+
+    #blue{
+      background-color: lightyellow;
+    }
+
+    #green{
+      background-color: lightyellow;
+    }
+
+</style>
+  <script src="./resources/js/common.js"></script>
+  
+</head>
+<body>
+  <div class="wrap_color">
+    <div id="red">빨강</div>
+    <div id="pink">분홍</div>
+    <div id="blue">파랑</div>
+    <div id="green">초록</div>
+  </div>
+
+  <div class="base">
+    <label><input type="checkbox" class='all' id="checkAll">전체선택</label>
+    <label><input type="checkbox" class='color' id="inpRed">빨강</label>
+    <label><input type="checkbox" class='color' id="inpPink" >분홍</label>
+    <label><input type="checkbox" class='color' id="inpBlue" >파랑</label>
+    <label><input type="checkbox" class='color' id="inpGreen" >초록</label>
+  </div>
+
+  <button class='btn_Select' id="btnSelect">선택</button>
+  <button class='btn_clear' id="btnClear">clear</button>
+  <script>
+    // div의 text와 체크박스의 색상버튼을 클릭할경우 해당색상의div에 스타일
+    // background-color는 색상명으로 변경하고 color는 하얀색으로 변경
+
+    //전체 선택을 체크하면 모든 체크박스를 체크상태로 변경
+    // clear버튼을 누르면 모든 div요소의 style을 본래대로 되돌린다.
+
+    // 체크여부는 checked 속성을 통해 알 수 있음
+
+    // let setRed={
+    //   border: '1px solid red',
+    //   backgroundcolor: 'red'
+    // }
+
+    // let setPink={
+    //   border: '1px solid pink',
+    // }
+    // let setBlue={
+    //   border: '1px solid blue',
+    // }
+    // let setGreen={
+    //   border: '1px solid green',
+    // }
+
+
+
+    // red.addEventListener('click', ev=>{
+    //   // let turnOn = createElement('div',{style:setRed,text:''});
+    //   // $('#red').append(turnOn);
+    //   red.style.backgroundColor = 'red';
+    // })
+
+    // pink.addEventListener('click', ev=>{
+    //   // let turnOn = createElement('div',{style:setRed,text:''});
+    //   // $('#red').append(turnOn);
+    //   pink.style.backgroundColor = 'pink';
+    // })
+
+    // blue.addEventListener('click', ev=>{
+    //   // let turnOn = createElement('div',{style:setRed,text:''});
+    //   // $('#red').append(turnOn);
+    //   blue.style.backgroundColor = 'blue';
+    // })
+
+    // green.addEventListener('click', ev=>{
+    //   // let turnOn = createElement('div',{style:setRed,text:''});
+    //   // $('#red').append(turnOn);
+    //   green.style.backgroundColor = 'green';
+    // })
+
+    // let setColor = 
+
+
+    let colorDivId = { // 미리 매핑
+      redCheck:'red',
+      pinkCheck : 'pink',
+      blueCheck : 'blue',
+      greenCheck : 'green'
+    }
+
+    $('#checkAll').addEventListener('click',ev=>{
+      $('.color').forEach(e=>{
+        e.checked = allCheck.checked;
+      })
+    })
+
+
+    let changeColor = () =>{
+      btnSelect.addEventListener('click', ev=>{
+      //체크상태인 체크박스가 뭔지 확인
+      $('.wrap_color>div').forEach(e=>{
+         e.style.backgroundColor = 'white';
+         e.style.color = 'black';
+        })
+
+      $('.color').forEach(e=>{
+        if(e.checked){
+          $(`#${colorDivId[e.id]}`).style.backgroundColor = colorDivId[e.id];
+          $(`#${colorDivId[e.id]}`).style.color = 'white';
+        }
+      })
+    })
+    }
+
+    btnSelect.addEventListener('click',changeColor);
+    btnClear.addEventListener('click',ev=>{
+      $('.base input[type=checkbox]').forEach(e=>{
+        e.checked = false;
+      })
+
+      changeColor();
+    });
+    
+
+  </script>
+</body>
+</html>

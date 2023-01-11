@@ -41,12 +41,13 @@
 		<button id="btn">현재위치확인</button>
 
 		<script>
-			let map;
-			let markers = [];
+			let map; // 최상단에서 초기화
+			let markers = []; // 최상단에서 초기화
 
-			btn.addEventListener("click", async (e) => {
-				let keyword = inpSearch.value;
-				if (!keyword) {
+			// 버튼을 클릭했을 때 실행
+			btn.addEventListener("click", async (e) => { // async 함수선언
+				let keyword = inpSearch.value; // 버튼으로부터 저장된 value로 keyword 초기화
+				if (!keyword) { // 키워드가 없으면?
 					alert("키워드를 입력하세요.");
 					return;
 				}
@@ -59,6 +60,9 @@
 				});
 			});
 
+
+
+			
 			let renderMarker = (xys) => {
 				markers.forEach((e) => {
 					e.setMap(null);

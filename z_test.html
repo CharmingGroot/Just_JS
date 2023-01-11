@@ -5,136 +5,33 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Document</title>
-		<style type="text/css">
-			.note {
-				border: 1px solid;
-				min-height: 300px;
-			}
-		</style>
-		<script>
-			let $ = function (cssSelector, message) {
-				let htmlElements = document.querySelectorAll(cssSelector);
-				if (message) {
-					htmlElements.forEach((e) => {
-						e.innerHTML += message + "<br>";
-					});
-				}
-				if (htmlElements.length == 1) {
-					return htmlElements[0];
-				}
-
-				return htmlElements;
-			};
-		</script>
+		<style></style>
 	</head>
 	<body>
-	<script>
-		
-		// const f1 = (callback)=> {
-		// 	setTimeout(()=>{
-		// 		console.log("1번 주문 완료");
-		// 		callback();
+		<div class="wrap"></div>
+		<script>
+			let createGradiant = ()=> {
+				var ouput = "";
+				// div 256개 만들기
+				for (var i = 0; i < 256; i++) {
+					ouput += "<div></div>";
+				}
 
-		// 	}, 1000);
-		// }
+				// div 256개 body에 태그화하여 입력하기
+				let child = document.body.innerHTML = ouput;
+				// document.querySelector(".wrap").appendChild(child);
 
-		// const f2 = (callback)=> {
-		// 	setTimeout(()=>{
-		// 		console.log("2번 주문 완료");
-		// 		callback();
+				// 256개의 div 선택자를 모두 선택
+				var divs = document.querySelectorAll("div"); // divs는 256개의 선택자를 가진상태
+				for (var i = 0; i < divs.length; i++) {
+					var div = divs[i];
+					// 스타일 적용
+					div.style.height = "3px";
+					div.style.backgroundColor = `rgb(${1 * i},${1 * i},${1 * i})`;
+				}
+			};
 
-		// 	}, 3000);
-		// }
-
-		// const f3 = (callback)=> {
-		// 	setTimeout(()=>{
-		// 		console.log("3번 주문 완료");
-		// 		callback();
-
-		// 	}, 2000);
-		// }
-
-		// console.log("시작");
-		// f1(()=>{
-		// 	f2(()=>{
-		// 		f3(()=>{
-		// 			console.log("끝")
-		// 		});
-		// 	});
-		// });
-
-
-		
-		
-		const f1 = ()=>{
-			return new Promise((res, rej)=>{
-				setTimeout(()=>{
-					res("1번주문완료"); // function res(){return "1번주문완료"} 의 축약본이구나.
-				},1000);
-			});
-		};
-
-		const f2 = (message)=>{
-			console.log(message);
-			return new Promise((res, rej)=>{
-				setTimeout(()=>{
-					res("2번주문완료");
-					// rej(new Error("xxx"));
-
-				},3000);
-			});
-		};
-
-		const f3 = (message)=>{
-			console.log(message);
-			return new Promise((res, rej)=>{
-				setTimeout(()=>{
-					res("3번주문완료");
-				},2000);
-			});
-		};
-
-		// console.log('실행');
-		// f1()
-		// 	.then((res)=> f2(res))
-		// 	.then((res)=> f3(res))
-		// 	.then((res)=> console.log(res))
-		// 	.finally(()=>{
-		// 		console.log("끝");
-		// 	});
-
-
-		// Promise.all
-		// console.time('x');
-		// Promise.all([f1(), f2(),f3()]).then((res)=>{
-		// 	console.log(res);
-		// 	console.timeEnd("x");
-		// });
-
-		// Promise.race
-		// console.time('x');
-		// Promise.race([f1(), f2(),f3()]).then((res)=>{
-		// 	console.log(res);
-		// 	console.timeEnd("x");
-		// });
-
-		async function order(){
-			try {
-				// const result1 = await f1();
-				// const result2 = await f2(result1);
-				// const result3 = await f3(result2);
-				const result = await Promise.all([f1(),f2(),f3()]);
-				// console.log(result3);
-				console.log(result);
-			} catch (error) {
-				console.log(error);
-			}
-			console.log("end");
-		}
-
-		order();
-
-
-	</script>	
+			createGradiant();
+		</script>
 	</body>
 </html>

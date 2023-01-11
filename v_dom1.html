@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style type="text/css">
+    .note {
+      border: 1px solid;
+      min-height: 200px;
+    }
+  </style>
+  <script>
+    let $ = function (cssSelector, message) {
+      let htmlElements = this.document.querySelectorAll(cssSelector);
+
+      if (message) {
+        htmlElements.forEach((e) => {
+          e.innerHTML += message + "<br>";
+        });
+      }
+
+      if (cssSelector.startsWith('#')) return htmlElements[0];
+      return htmlElements;
+    };
+
+    
+    let createElement = (tag, props) =>{
+        let res = document.createElement(tag)
+
+        // 속성을 동적으로 추가
+        for(key in props.prop){
+          res[key] = props.prop[key];
+        }
+
+        // 속성을 동적으로 추가
+        for(key in props.style){
+          res.style[key] = props.style[key];
+        }
+
+        if(props.text){
+          let textNode = document.createTextNode(text);
+          res.appendChild(textNode);
+        }
+
+        return res;
+      }
+  </script>
+</head>
+<body>
+  <h1>DOM</h1>
+  <h2>텍스트 노드가 있는 node를 생성</h2>
+
+  <div id="nodeNote" class="note"></div>
+  <script>
+    
+    $('#nodeNote').addEventListener('click',ev=>{
+      
+      // createElement(tagname) : 태당 태그 요소를 생성
+      // let title = document.createElement('h3');
+      // let subTitle = document.createElement('h4');
+
+      
+
+      //textNode 생성
+      let titText = document.createTextNode('안녕 나는 텍스트 노드야');
+      let subText = document.createTextNode('안녕나는 서브텍스트 노드야');
+
+      // 자식으로 추가
+      title.appendChild(titText);
+      subTitle.appendChild(subText);
+
+      let title = createElement('h3',{text: '안녕나는뽀로로야'});
+      let subTitle = createElement('h3',{text: '안녕11111111111나는뽀로로야'});
+
+      console.dir(title);
+      console.dir(subTitle);
+
+
+      nodeNote.appendChild(title);
+      nodeNote.appendChild(subTitle);
+      
+      // props : 객체 prop, style, text라는 속성을 가지는 객체
+      //          prop : 요소객체의 속성의 name, value
+      //          style : 요소개겣의 style속성에 들어갈 name, value
+      //          text : 요소객체의 textNode에 들어갈 문자열
+
+      
+
+    })
+  </script>
+  <h2>텍스트 노드가 없는 노드 생성</h2>
+  <div id="nodeNote2" class="note"></div>
+  <script>
+    $('#nodeNote2').addEventListener('click',ev=>{
+
+      let img = createElement('img',{prop:{src:'./resources/image/IU.jpg'},style:{width:'150px', height:'150px'}});
+      console.dir(img);
+      img.src = './resources/image/IU.jpg'; // 
+      img.style.width='150px';  // 요소에 접근하여 동적으로 값변경
+      img.style.height='150px';
+      nodeNote2.appendChild(img); // 요소에 접근하여 값 할당
+
+    })
+  </script>
+
+  <h2>노드삭제</h2>
+  <div id="nodeNote3" class="note nodeNote3"></div>
+  <button id="btnAdd">노드 추가</button>
+  <button id="btnDel">노드 삭제</button>
+
+  <script>
+    $('#btnAdd').addEventListener('click',ev=>{
+      let img = createElement('img',{prop:{src:'./resources/image/IU.jpg'},style:{width:'150px', height:'150px'}});
+      nodeNote3.appendChild(img);
+    })
+    $('#btnDel').addEventListener('click',ev=>{
+      $('#nodeNote3> img:last-child').remove(); // 수도클래스를 사용하여 마지막 요소로 접근하고 remove 
+    })
+  </script>
+  
+</body>
+</html>
